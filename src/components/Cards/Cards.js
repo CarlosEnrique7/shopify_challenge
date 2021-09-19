@@ -1,14 +1,14 @@
-import React from "react";
+import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import "./Cards.css";
 
-const Cards = ({ url, title, desc }) => {
+const Cards = ({ url, title, desc, date, id }) => {
   const useStyles = makeStyles({
     card: {
       maxWidth: 375,
@@ -17,18 +17,48 @@ const Cards = ({ url, title, desc }) => {
     },
     photo: {
       height: 240,
+      position: "relative",
+    },
+    btn: {
+      background: "none",
+      color: "red",
+      "&:hover": {
+        background: "none",
+      },
+      cursor: "pointer",
+      marginLeft: 12,
+    },
+    hidden: {
+      display: "none",
+    },
+    action: {
+      cursor: "default",
     },
   });
 
   const classes = useStyles();
 
+  const [isLiked, setIsLiked] = useState(false);
+
+  const setLike = () => {
+    setIsLiked(!isLiked);
+  };
+
   return (
     <Card className={classes.card}>
-      <CardActionArea>
+      <CardActionArea className={classes.action} disableRipple>
         <CardMedia className={classes.photo} image={url} title={title} />
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Love_Heart_SVG.svg/2258px-Love_Heart_SVG.svg.png"
+          className={isLiked ? "liked" : classes.hidden}
+          alt="like animation"
+        ></img>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {title}
+          </Typography>
+          <Typography gutterBottom variant="body2" color="textSecondary" component="p">
+            {date}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {desc.substring(0, 240) + "..."}
@@ -36,9 +66,15 @@ const Cards = ({ url, title, desc }) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Like
-        </Button>
+        {!isLiked ? (
+          <span className={"material-icons-outlined " + classes.btn} onClick={setLike}>
+            favorite_border
+          </span>
+        ) : (
+          <span className={"material-icons " + classes.btn} onClick={setLike}>
+            favorite
+          </span>
+        )}
       </CardActions>
     </Card>
   );
