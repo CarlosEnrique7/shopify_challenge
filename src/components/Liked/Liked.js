@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core";
+import { CircularProgress, makeStyles, Typography } from "@material-ui/core";
 import Cards from "../Cards/Cards";
 import Nav from "../Nav/Nav";
+import { Link } from "react-router-dom";
 
 const Liked = () => {
   const [likedData, setLikedData] = useState([]);
@@ -32,6 +33,22 @@ const Liked = () => {
       gridTemplateColumns: "repeat(auto-fill, 24rem)",
       justifyContent: "space-evenly",
     },
+    center: {
+      marginTop: "50vh",
+      width: "90vw",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    text: {
+      textAlign: "center",
+      width: 200,
+      marginLeft: 0,
+      marginTop: 10,
+    },
+    loading: {
+      color: "#A64253",
+    },
   });
 
   const classes = useStyles();
@@ -39,19 +56,28 @@ const Liked = () => {
   return (
     <div className={classes.wrapper}>
       <Nav />
-      {likedData.map((item) => (
-        <Cards
-          url={item.img_src}
-          title={item.rover.name}
-          fullName={item.camera.full_name}
-          name={item.camera.name}
-          launch={item.rover.launch_date}
-          land={item.rover.landing_date}
-          date={item.earth_date}
-          key={item.id}
-          id={item.id}
-        />
-      ))}
+      {likedData <= 0 ? (
+        <div className={classes.center}>
+          <CircularProgress className={classes.loading} />
+          <Typography variant="body2" className={classes.text}>
+            If you have not liked anything, <Link to="/"> try liking an image!</Link>
+          </Typography>
+        </div>
+      ) : (
+        likedData.map((item) => (
+          <Cards
+            url={item.img_src}
+            title={item.rover.name}
+            fullName={item.camera.full_name}
+            name={item.camera.name}
+            launch={item.rover.launch_date}
+            land={item.rover.landing_date}
+            date={item.earth_date}
+            key={item.id}
+            id={item.id}
+          />
+        ))
+      )}
     </div>
   );
 };
