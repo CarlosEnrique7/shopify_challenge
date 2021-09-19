@@ -8,11 +8,11 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import "./Cards.css";
 
-const Cards = ({ url, title, desc, date, id }) => {
+const Cards = ({ url, title, fullName, name, launch, land, date, id }) => {
   const useStyles = makeStyles({
     card: {
-      maxWidth: 375,
-      margin: 20,
+      width: "24rem",
+      marginTop: 100,
       borderRadius: 12,
     },
     photo: {
@@ -26,7 +26,7 @@ const Cards = ({ url, title, desc, date, id }) => {
         background: "none",
       },
       cursor: "pointer",
-      marginLeft: 12,
+      marginLeft: 10,
     },
     hidden: {
       display: "none",
@@ -69,14 +69,20 @@ const Cards = ({ url, title, desc, date, id }) => {
           alt="like animation"
         ></img>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography variant="h5" component="h2">
             {title}
           </Typography>
           <Typography gutterBottom variant="body2" color="textSecondary" component="p">
             {date}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {desc.substring(0, 240) + "..."}
+            {`Camera: ${fullName} (${name})`}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {`Launch Date: ${launch}`}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {`Landing Date: ${land}`}
           </Typography>
         </CardContent>
       </CardActionArea>
