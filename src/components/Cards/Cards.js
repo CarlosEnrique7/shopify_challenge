@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -39,9 +39,24 @@ const Cards = ({ url, title, desc, date, id }) => {
   const classes = useStyles();
 
   const [isLiked, setIsLiked] = useState(false);
+  const [doAnimation, setDoAnimation] = useState(false);
+
+  useEffect(() => {
+    let like = localStorage.getItem(id);
+    setIsLiked(like);
+  }, []);
 
   const setLike = () => {
-    setIsLiked(!isLiked);
+    if (isLiked) {
+      setIsLiked(false);
+      localStorage.removeItem(id);
+      setDoAnimation(false);
+    }
+    if (!isLiked) {
+      setIsLiked(true);
+      localStorage.setItem(id, true);
+      setDoAnimation(true);
+    }
   };
 
   return (
@@ -50,7 +65,7 @@ const Cards = ({ url, title, desc, date, id }) => {
         <CardMedia className={classes.photo} image={url} title={title} />
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Love_Heart_SVG.svg/2258px-Love_Heart_SVG.svg.png"
-          className={isLiked ? "liked" : classes.hidden}
+          className={doAnimation ? "liked" : classes.hidden}
           alt="like animation"
         ></img>
         <CardContent>
