@@ -30,7 +30,9 @@ const Home = () => {
 
   const useStyles = makeStyles({
     loading: {
-      marginTop: "50%",
+      marginTop: "50vh",
+      marginLeft: "50vw",
+      color: "#A64253",
     },
     load: {
       color: "red",

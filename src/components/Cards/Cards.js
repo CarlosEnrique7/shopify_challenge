@@ -14,6 +14,10 @@ const Cards = ({ url, title, fullName, name, launch, land, date, id }) => {
       width: "24rem",
       marginTop: 100,
       borderRadius: 12,
+      "&:hover": {
+        transform: "scale(1.05)",
+        boxShadow: "-5px 5px 5px #A64253",
+      },
     },
     photo: {
       height: 240,
